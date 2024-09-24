@@ -126,8 +126,8 @@ if __name__ == '__main__':
     with requests.Session() as session:
         session.headers = HEADERS
 
-        # Aufenthaltserlaubnis auf einen neuen Pass übertragen
-        my_service = '121874'
+        # Anmeldung einer Wohnung
+        my_service = '120686'
 
         url = 'https://service.berlin.de/terminvereinbarung/termin/restart/'
         params = {
@@ -154,18 +154,18 @@ if __name__ == '__main__':
         parser.feed(response.text)
 
         for title, link in parser.links.items():
-            logging.info('%s - %s', title, link)
+            logging.info('%s - https://service.berlin.de/%s', title, link)
 
         earliest = next(iter(parser.links.values()))
         url = f'https://service.berlin.de/{earliest}'
 
-        response = session.get(url, params=params)
+        response = session.get(url)
 
         parser = TimeLinkParser()
         parser.feed(response.text)
 
         for title, link in parser.data.items():
-            logging.info('%s - %s', title, link)
+            logging.info('%s - https://service.berlin.de%s', title, link)
 
         earliest = next(iter(parser.data.values()))
         url = f'https://service.berlin.de/{earliest}'

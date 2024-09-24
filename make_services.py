@@ -90,8 +90,8 @@ if __name__ == '__main__':
 
         locations = {}
 
-        for pos, (service_idx, service_name) in enumerate(sorted(services.items())):
-            logging.info('processing service %d out of %d', pos, len(services))
+        for pos, (service_idx, service_name) in enumerate(sorted(services.items(), key=lambda x: x[1])):
+            logging.info('processing %s %s (%d out of %d)', service_idx, service_name, pos, len(services))
             response = session.get(f'https://service.berlin.de/dienstleistung/{service_idx}/')
 
             parser = LocationParser()
